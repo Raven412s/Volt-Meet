@@ -1,4 +1,11 @@
 "use client";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import {
   CallControls,
@@ -9,17 +16,9 @@ import {
   SpeakerLayout,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
-import React, { useState } from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { LayoutList, Users } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import EndCallButton from "./EndCallButton";
 import Loader from "./Loader";
 
@@ -31,23 +30,22 @@ const MeetingRoom = () => {
   const [layout, setLayout] = useState<CallLayoutType>("speaker-left");
   const [showParticipants, setShowParticipants] = useState(false);
   const { useCallCallingState } = useCallStateHooks();
-const router = useRouter()
+  const router = useRouter();
 
   const callingState = useCallCallingState();
 
-  if (callingState !== CallingState.JOINED)  return <Loader />
+  if (callingState !== CallingState.JOINED) return <Loader />;
 
-
-    const CallLayout = () => {
-      switch (layout) {
-        case "grid":
-          return <PaginatedGridLayout />;
-        case "speaker-right":
-          return <SpeakerLayout participantsBarPosition={"left"} />;
-        default:
-          return <SpeakerLayout participantsBarPosition={"right"} />;
-      }
-    };
+  const CallLayout = () => {
+    switch (layout) {
+      case "grid":
+        return <PaginatedGridLayout />;
+      case "speaker-right":
+        return <SpeakerLayout participantsBarPosition={"left"} />;
+      default:
+        return <SpeakerLayout participantsBarPosition={"right"} />;
+    }
+  };
 
   return (
     <section className="relative h-screen w-full p-4 overflow-hidden text-white">
@@ -55,6 +53,7 @@ const router = useRouter()
         <div className="flex size-full max-w-[1000px] items-center ">
           <CallLayout />
         </div>
+
         <div
           className={cn("h-[calc(100vh-86px)] ml-2 hidden", {
             "show-block": showParticipants,
@@ -64,7 +63,7 @@ const router = useRouter()
         </div>
       </div>
       <div className="fixed items-center justify-center w-full bottom-0 flex gap-5  flex-wrap">
-        <CallControls onLeave={()=>router.push("/")} />
+        <CallControls onLeave={() => router.push("/")} />
 
         <DropdownMenu>
           <div className="flex items-center">

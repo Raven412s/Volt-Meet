@@ -1,12 +1,12 @@
+import { Toaster } from "@/components/ui/toaster";
+import { ClerkProvider } from "@clerk/nextjs";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-import { Toaster } from "@/components/ui/toaster";
-import { SpeedInsights } from '@vercel/speed-insights/next';
-
+import { Analytics } from "@vercel/analytics/react"
 import "@stream-io/video-react-sdk/dist/css/styles.css";
-import 'react-datepicker/dist/react-datepicker.css'
+import 'react-datepicker/dist/react-datepicker.css';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -41,6 +41,7 @@ export default function RootLayout({
         <body className={`${inter.className} bg-dark-2`}>
           {children}
           <SpeedInsights />
+            <Analytics/>
           <Toaster />
         </body>
       </ClerkProvider>
